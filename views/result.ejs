@@ -1,0 +1,17 @@
+<% include partials/header %>
+<div class="container" style="text-align: center; font-size: 30px">
+    <h1>Result: </h1>
+    <p>Testing Password: "<span style="font-weight: 700"><%=password%></span>"</p>
+    <% if(!found){ %>
+        <p>no current user with this pattern found, getcha you dumb hacker</p>
+    <% }else{%>
+        <p>Guess you are: <span style="font-weight: 700"><%=name%></span></p>
+    <%}%>
+    <p><a href="/">Go to front page</a></p>
+    <p><a href="/demo">Go to demo page</a></p>
+    <p><a href="/test">Do the test again</a></p>
+</div>
+
+    
+	</BODY>
+</HTML>

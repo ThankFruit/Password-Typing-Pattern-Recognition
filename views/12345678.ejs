@@ -1,0 +1,176 @@
+<% include partials/header %>
+		<script type="text/javascript">
+			var result =[[],[],[],[],[],[],[],[],[],[]];
+			var valid = [false, false, false, false, false, false, false, false, false, false];
+			var flag = [false, false, false, false, false, false, false, false, false, false];
+			var pass = "12345678";
+			var pdate;
+			var predate;
+			var time;
+			var url = "/collectdata/iloveyou";
+			var center = [];
+			var diss = [];//所有的距离
+			var stdDev = 0;
+			var count = 0;
+			var avgdis = 0;
+			function $(s){
+				return document.getElementById(s)?document.getElementById(s):s;
+			}
+			
+			function keypress(){
+				var currKey=0,CapsLock=0,e=e||event;
+				currKey=e.keyCode||e.which||e.charCode;
+				pdate=new Date();
+			}
+
+			function keydown(){
+				var e=e||event;
+				var currKey=e.keyCode||e.which||e.charCode;
+			}
+
+			function keyup(i){
+				var currKey=0,CapsLock=0,e=e||event;
+				currKey=e.keyCode||e.which||e.charCode;
+				pdate=new Date();
+				if(flag[i]!==false){
+					time = pdate-predate;
+					result[i].push(time);
+				}
+				if(currKey!==9){
+					flag[i] = true;
+				}
+				predate = pdate;
+			}
+			
+			function subToHX(){
+				this.checkValid();
+				this.calCenter();
+				this.calDistances();
+				this.calStdDev();
+				console.log("test");
+				var pattern = {
+					name: document.getElementById("name").innerHTML,
+					password: pass,
+					value: 10,
+					distances: diss,
+					intervals: center,
+					averageDis: avgdis,
+					standerdDev: stdDev
+				}
+				document.getElementById("myForm").action = url+this.getUrl(pattern);;
+				document.getElementById("myForm").submit();
+			}
+			
+			function calStdDev(){
+				var sum = 0;
+				for(var i=0; i<diss.length; i++){
+					sum = sum+diss[i];
+				}
+				avgdis = sum/diss.length;
+				var sums = 0;
+				for(var i=0; i<diss.length; i++){
+					sums = sums+(avgdis-diss[i])*(avgdis-diss[i]);
+				}
+				stdDev = Math.sqrt(sums/diss.length);
+			}
+			
+			function calDistances(){
+				var index = 0;
+				for(var i=0; i<10; i++){
+					if(!valid[i]){
+						continue;
+					}
+					diss[index] = this.calDistance(center, result[i]);
+					index = index+1;
+				}
+			}
+			
+			function calDistance(center, target){
+				var sum = 0;
+				for(var i=0; i<pass.length-1; i++){
+					sum = sum + (center[i]-target[i])*(center[i]-target[i]);
+				}
+				return Math.sqrt(sum);
+			}
+			
+			function calCenter(){
+				for(var i=0; i<pass.length-1; i++){
+					center[i] = 0;
+				}
+				
+				// for(var i=0; i<pass.length-1; i++){
+				// 	var indexMax = -1;
+				// 	var indexMin = -1;
+				// 	var max = 0;
+				// 	var min = 9999;
+				// 	var sum = 0;
+				// 	for(var j=0; j<10; j++){
+				// 		if(!valid[j]){
+				// 			continue;
+				// 		}
+				// 		if(result[j][i] > max){
+				// 			max = result[j][i];
+				// 			indexMax = j;
+				// 		}
+				// 		if(result[j][i] < min){
+				// 			min = result[j][i];
+				// 			indexMin = j;
+				// 		}
+				// 		sum = sum+result[j][i];
+				// 	}
+				// 	sum = sum - max - min;
+				// 	var avg = sum/(count-2);
+				// 	result[indexMax][i] = avg;
+				// 	result[indexMin][i] = avg;
+				// }
+				
+				
+				for(var i=0; i<10; i++){
+					if(!valid[i]){
+						continue;
+					}
+					for(var j=0; j<pass.length-1; j++){
+						center[j] = center[j]+result[i][j];
+					}
+				}
+				for(var i=0; i<pass.length-1; i++){
+					center[i] = center[i]/count;
+				}
+			}
+			
+			function checkValid(){
+				for(var i=0; i<result.length; i++){
+					if(result[i].length === pass.length-1){
+						valid[i] = true;
+						count = count + 1;
+					}
+				}
+			}
+			
+			function getUrl(obj){
+	          var qstring = "?"
+		      for (var k in obj) {
+		        qstring += k + "=" + obj[k] + "&"
+		      }
+		      return qstring
+			}
+		</script>
+		<div class="container" style="text-align: center">
+			<p style="font-size: 20px">Hi <span id="name"><%= namei%></span></span>, please type "12345678" for 10 times</p>
+			<p><input class="input-lg" id="input0" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(0)"/></p>
+			<p><input class="input-lg" id="input1" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(1)"/></p>
+			<p><input class="input-lg" id="input2" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(2)"/></p>
+			<p><input class="input-lg" id="input3" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(3)"/></p>
+			<p><input class="input-lg" id="input4" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(4)"/></p>
+			<p><input class="input-lg" id="input5" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(5)"/></p>
+			<p><input class="input-lg" id="input6" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(6)"/></p>
+			<p><input class="input-lg" id="input7" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(7)"/></p>
+			<p><input class="input-lg" id="input8" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(8)"/></p>
+			<p><input class="input-lg" id="input9" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup(9)"/></p>
+			<a type="button" href="javascript:subToHX();"><button style="width: 224px" class="btn btn-primary btn-lg">continue</button></a>
+		</div>
+		<div style="display:'none'" > 
+			<form id="myForm" action="" method="post"></form>
+		</div>
+	</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+<% include partials/header %>
+	<div class="container">
+	    <header class="jumbotron">
+	        <div class="container">
+	            <h1>Safer Password Protecton</h1>
+	            <h3>with help of personal typing pattern recognization</h3>
+	            <p style="margin-top: 25px">
+	                <a type="button" href="/demo"><button class="btn btn-primary btn-lg">demo</button></a>
+	                </a>
+	            </p>
+	        </div>
+	    </header>
+
+		<p style="font-size:55px;">Problem motivation</p>
+		<ul style="font-size:35px; margin-bottom: 100px">
+			<li>password leaking has always been a potential problem</li>
+			<li>everyone's typing habbit is different and unique</li>
+			<li>combining them togeter we can provide a stronger password protection</li>
+		</ul>
+		<p style="font-size:55px; ">Proposed solution</p>
+		<ol>
+			<li style="font-size:43px;">Typing pattern collecting
+				<ul style="font-size:30px;">
+					<li>At each user's first time loging in, ask them to type in their password several times</li>
+					<li>While typing, their typing habbits to certain password are recorded</li>
+					<li>After all the typing, their typing features are calculated and saved in the database</li>
+				</ul>
+			</li>
+			<li style="margin-top: 30px; font-size:43px;">Typing pattern checking
+				<ul style="font-size:30px;">
+					<li>ask the unknown user to type in the password</li>
+					<li>After typing, the user's typing pattern is calculated and sent to database</li>
+					<li>check if there are any matching pattern in the database</li>
+					<li>return the most potential user or no former user with this pattern at all</li>
+				</ul>
+			</li>
+		</ol>
+		<h2><a href="/demo">Demonstration</a></h2>
+		<h2><a href="/data">Data Collected</a></h2>
+	</div>
+</BODY>
+</HTML>

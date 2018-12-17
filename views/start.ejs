@@ -1,0 +1,20 @@
+<% include partials/header %>
+	    <script type="text/javascript">
+	        var url = "/collectdata/password?name=";
+			function subToHX(){
+				document.getElementById("myForm").action = url+document.getElementById("name").value;
+				document.getElementById("myForm").submit();
+			}
+		</script>
+		<div class="container" style="text-align: center">
+			<p style="font-size: 30px">create a user name</p>
+			<p><input class="input-lg" id="name" type="text"/></p>
+			<a type="button" href="javascript:subToHX();"><button style="width: 224px" class="btn btn-primary btn-lg">continue</button></a
+
+		</div>
+		
+		<div style="display:'none'" > 
+			<form id="myForm" action="" method="post"></form>
+		</div>
+	</BODY>
+</HTML>

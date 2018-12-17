@@ -1,0 +1,14 @@
+<% include partials/header %>
+<h1 style="text-align: center">Data Collected</h1>
+<div class="container">
+    <% for(var i=0; i<allpatterns.length; i++){ %>
+    <p style="font-size: 25px">name: <%= allpatterns[i].name %>, password: <%= allpatterns[i].password %>, average distance: <%= allpatterns[i].averageDis %>, std:  <%= allpatterns[i].stdDev %></p>
+    <% if(i%4==3){%>
+    <p style="border-top: 3px solid black"></p></p>
+    <% } %>
+    <%  } %>
+</div>
+
+
+	</BODY>
+</HTML>

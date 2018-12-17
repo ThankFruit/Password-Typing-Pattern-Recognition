@@ -1,0 +1,60 @@
+<% include partials/header %>
+	    <script type="text/javascript">
+	        var result =[];
+			var pdate;
+			var predate;
+			var time;
+			var flag = false;
+	        var url = "/test/result?password=";
+			function subToHX(){
+			    var pass = document.getElementById("input0").value;
+			    if(result.length!=7 ||(pass!="password" && pass!="12345678" && pass!="trustno1" && pass!="iloveyou")){
+			        alert("false input, type again");
+			        result = [];
+			        flag = false;
+			        url = "/test/result?password=";
+			        document.getElementById("input0").value = "";
+			    }else{
+				document.getElementById("myForm").action = url+document.getElementById("input0").value+"&intervals="+result;
+				document.getElementById("myForm").submit();
+			    }
+			}
+			function $(s){
+				return document.getElementById(s)?document.getElementById(s):s;
+			}
+			
+			function keypress(){
+				var currKey=0,CapsLock=0,e=e||event;
+				currKey=e.keyCode||e.which||e.charCode;
+				pdate=new Date();
+			}
+
+			function keydown(){
+				var e=e||event;
+				var currKey=e.keyCode||e.which||e.charCode;
+			}
+
+			function keyup(){
+				var currKey=0,CapsLock=0,e=e||event;
+				currKey=e.keyCode||e.which||e.charCode;
+				pdate=new Date();
+				if(flag!==false){
+					time = pdate-predate;
+					result.push(time);
+				}
+				flag = true;
+				predate = pdate;
+			}
+		</script>
+		<div class="container" style="text-align: center">
+			<p style="font-size: 30px">type in one of the following passwords</p>
+			<p style="font-size: 30px">"password" "12345678" "iloveyou" "trustno1"</p>
+			<p style="font-size: 30px">this system will tell if you are a unknow user or registered user</p>
+			<p><input class="input-lg" id="input0" type="text" onkeydown="keydown()" onkeypress="keypress()" onkeyup="keyup()"/></p>
+			<a type="button" href="javascript:subToHX();"><button style="width: 224px" class="btn btn-primary btn-lg">continue</button></a>
+		</div>
+		<div style="display:'none'" > 
+			<form id="myForm" action="" method="post"></form>
+		</div>
+	</BODY>
+</HTML>
